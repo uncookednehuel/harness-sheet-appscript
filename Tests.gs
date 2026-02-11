@@ -6,7 +6,7 @@ function testFindIDCell() {
 
 function testGetChain() {
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());
-  UI.alert("Test result: " + Component.fromID("VIT").getPin(8).getChain().toString());
+  UI.alert("Test result: " + Component.fromID("PER").getPin("A").getChain().toString());
   // const chain = new Chain();
   // chain.pins = [new Pin("VIT", 2, "IMP", "4", "Crac", "nunuunununun"), new Pin("IMP", 4, "IMP", "4", "Crac", "nunuunununun")]
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());

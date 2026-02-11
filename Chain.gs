@@ -9,9 +9,9 @@ class Chain {
   burnChain() {}
 
   toString() {
-    let str = "Tos: {"
+    let str = "IDs: {"
     this.pins.forEach(function(val, i, arr) { str += (val.componentID + (i == arr.length - 1 ? "" : " :: "))});
-    str += "} To pins: {";
+    str += "} Pins values: {";
     this.pins.forEach(function(val, i, arr) { str += (val.pinName + (i == arr.length - 1 ? "" : " :: "))});
     str += "}";
     return str;

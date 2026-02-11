@@ -2,9 +2,9 @@ const UI = SpreadsheetApp.getUi();
 const SHEET = SpreadsheetApp.getActiveSheet();
 const SHEET_BREADTH = 15;
 const SHEET_DEPTH = 1000;
-const FUNCTION_TEXT = "Function"
-const PIN_TEXT = "Pin"
-const ID_PREFIX = "$"
+const FUNCTION_TEXT = "Function";
+const PIN_TEXT = "Pin";
+const ID_PREFIX = "$";
 
 function onOpen() {
   const submenu = UI.createMenu('are').addItem('gay', 'gay');
@@ -18,7 +18,7 @@ function onOpen() {
     .addToUi();
 }
 
-function gay() {UI.alert("Hahahah you fell for it monkey")}
+function gay() {UI.alert("Hahahah you fell for it silly")}
 
 function onEdit(e) {
   // UI.alert(seperateArguments("44 :: 3 :: 6677 :: 22"));

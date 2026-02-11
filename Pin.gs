@@ -20,12 +20,11 @@ class Pin {
     let chain = new Chain();
 
     let selectedPin = this;
-    UI.alert(this.tos);
     let selectedPinTos = seperateArguments(this.tos);
-    UI.alert(selectedPin.toPins);
     let nextPin = globalComponents.get(seperateArguments(this.tos)[0]).getPin(seperateArguments(selectedPin.toPins.toString())[0]);
-    UI.alert(nextPin.tos);
     let nextPinTos = seperateArguments(nextPin.tos); // TODO probably should delete this
+
+    // TODO have to make condition for if starting on last pin, because the current logic will not work.
 
     // Couple chain
     if (selectedPinTos.length == 1 && nextPinTos.length == 1) {
@@ -37,36 +36,44 @@ class Pin {
 
     // Complex chain
     let hasWrappedEnd = false;
-    while (true) {
+    let chainLength = Infinity;
+    let iterations = 0;
+    while (iterations <= chainLength) {
+      //if () { break; }
       // Normal case, where each pin has one less To than the previous
       if (nextPinTos.length < selectedPinTos.length) {
         if (hasWrappedEnd) {
           chain.pins.unshift(selectedPin);
+          UI.alert("Unshifted selected: " + selectedPin.toString());
         } else {
           chain.pins.push(selectedPin);
+          UI.alert("Pushed selected: " + selectedPin.toString());
         }
+        iterations++;
         selectedPin = nextPin;
-        selectedPinTos = seperateArguments(selectedPin.tos);
+        UI.alert("Getting next pin " + nextPinTos[0] + " in iteration " + iterations);
         nextPin = globalComponents.get(nextPinTos[0]).getPin(seperateArguments(nextPin.toPins.toString())[0]);
-        nextPinTos = seperateArguments(nextPin.tos);
-        continue;
       } else { // Must be at end, because first element of end will point to second to last one
         chain.pins.push(selectedPin);
+        UI.alert("Pushed selected before last: " + selectedPin.toString());
+        chain.pins.push(nextPin);
+        UI.alert("Pushed next: " + nextPin.toString());
+        iterations += 2;
         hasWrappedEnd = true;
-        selectedPin = globalComponents.get(selectedPinTos[selectedPinTos.length - 1])
-        .getPin(seperateArguments(selectedPin.toPins)[selectedPinTos.length - 1]);
-        selectedPinTos = seperateArguments(selectedPin.tos);
-        nextPin = globalComponents.get(selectedPinTos[0]).getPin(seperateArguments(selectedPin.toPins.toString())[0]);
-        nextPinTos = seperateArguments(nextPin.tos);
-      }
+        chainLength = nextPinTos.length;
 
-      if (chain.pins.includes(nextPin)) { break; }
+        // TODO I am almost certain the problem with getPin lyes in one of these not getting pins properly
+
+        selectedPin = globalComponents.get(nextPinTos[nextPinTos.length - 1])
+        .getPin(seperateArguments(nextPin.toPins)[nextPinTos.length - 1]);
+        nextPin = globalComponents.get(selectedPinTos[0]).getPin(seperateArguments(selectedPin.toPins.toString())[0]);
+      }
+      selectedPinTos = seperateArguments(selectedPin.tos);
+      nextPinTos = seperateArguments(nextPin.tos);
     }
 
     return chain;
-    
-    // Else, follow forward until the last one, get index of the one that you were in, and go from length - that index to end to do the rest of the beginning pins up to
-    // the current one, inserting them earlier in the compiled list, and boom bylat cyka done!
+    // boom blyat cyka done!
   }
 
   /**
