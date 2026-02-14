@@ -2,10 +2,14 @@
  * Represents one of the "blocks" that has an ID, name, and multiple rows of pins, each with properties.
  */
 class Component {
+  row: number;
+  col: number
+  id: string;
+  maxPins: number;
   /**
    * Creates a new component object using a known location on the sheet and ID
    */
-  constructor (row, col, id, maxPins) {
+  constructor (row: number, col: number, id: string, maxPins: number) {
     this.row = row;
     this.col = col;
     this.id = id;
@@ -19,7 +23,7 @@ class Component {
    * @param {String} The ID of the component you want to get
    * @return {Component} Component object
    */
-  static fromID(id) {
+  static fromID(id: string): Component | null {
     for (const [col, headerVal] of SHEET.getRange(1, 1, 1, SHEET_BREADTH).getValues()[0].entries()) {
       if (headerVal == FUNCTION_TEXT) {
         // Another for loop instead of indexOf because 2d array would make that more complicated
@@ -30,6 +34,7 @@ class Component {
         }
       }
     }
+    return null;
   }
 
   /**
@@ -37,7 +42,7 @@ class Component {
    * multiple sheets) and returns a map
    * @return {Map} Keys are the ID and values are the Component class instance
    */
-  static getAllComponentsMap() {
+  static getAllComponentsMap(): Map<string, Component> {
     let components = new Map();
     for (const [col, headerVal] of SHEET.getRange(1, 1, 1, SHEET_BREADTH).getValues()[0].entries()) {
       if (headerVal == FUNCTION_TEXT) {
@@ -54,19 +59,19 @@ class Component {
 
   /**
    * Gets a pin object instance of a certain pin in the component
-   * @param {pinValue} The pin value, also can be pin letter (you do not have to pinToPinValue!)
+   * @param {string} The pin alphanumerical
    * @return {Pin} A pin object
    */
-  getPin(pin) {
+  getPin(pin: string) {
     return new Pin(this.id, pin);
   }
 
   /**
    * Gets a DefinedPin object instance of a certain pin in the component
-   * @param {pinValue} The pin value, also can be pin letter (you do not have to pinToPinValue!)
+   * @param {string} The pin alphanumerical
    * @return {DefinedPin} A defined pin object
    */
-  getDefinedPin(pin) {
-    return getPin(pin).define(this);
+  getDefinedPin(pin: string) {
+    return this.getPin(pin).define(this);
   }
 }

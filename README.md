@@ -1,3 +1,5 @@
 # harness-sheet-appscript
 
-I don't trust the strange google appscript IDE thing to keep my code properly saved or version controlled so just in case here is a manually copy-pasted backup.
+Development repository for RIT Racing's harness spreadsheet extension. Made using CLASP and Google Appscript.
+
+Developed by Nehuel Armenanzas, Patrick Corbett, and Owen DeWilche.

@@ -2,10 +2,14 @@
  * Represents a pin entry in a component, e.g. pin value, the Tos in the chain, To Pins, Function, and so on
  */
 class DefinedPin extends Pin {
+  tos: string;
+  toPins: string
+  func: string;
+  wireColour: string;
   /**
    * Creates a defined pin. TODO will need to make two constructors for the different typs of pin formats (traditional vs new) and also change what info is stored
    */
-  constructor(componentID, pinAlphaNum, tos, toPins, func, wireColour) {
+  constructor(componentID: string, pinAlphaNum: string, tos: string, toPins: string, func: string, wireColour: string) {
     super(componentID, pinAlphaNum);
     this.tos = tos;
     this.toPins = toPins;
@@ -14,7 +18,7 @@ class DefinedPin extends Pin {
   }
 
   // Bloody monster
-  getChain() {
+  getChain(): Chain {
     const globalComponents = Component.getAllComponentsMap();
     let chain = new Chain();
 
