@@ -55,11 +55,18 @@ class Component {
   /**
    * Gets a pin object instance of a certain pin in the component
    * @param {pinValue} The pin value, also can be pin letter (you do not have to pinToPinValue!)
-   * @return A pin object
+   * @return {Pin} A pin object
    */
   getPin(pin) {
-    const pinValue = pinToPinValue(pin);
-    const vals = SHEET.getRange(this.row + pinValue, this.col - 3, 1, 5).getValues()[0];
-    return new Pin(this.id, pin, vals[1], vals[2], vals[3], vals[4]);
+    return new Pin(this.id, pin);
+  }
+
+  /**
+   * Gets a DefinedPin object instance of a certain pin in the component
+   * @param {pinValue} The pin value, also can be pin letter (you do not have to pinToPinValue!)
+   * @return {DefinedPin} A defined pin object
+   */
+  getDefinedPin(pin) {
+    return getPin(pin).define(this);
   }
 }
