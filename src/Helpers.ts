@@ -6,7 +6,7 @@ const ALPHABET = [
 /**
  * Converts a pin alphanumerical (A, B, 1, 2) to a pin value (1, 2, 3).
  */
-function pinToPinValue(en: string): number | null {
+function pinToPinValue(en: string): number {
   var parsed = parseInt(en);
   if (!Number.isNaN(parsed)) { return parsed; }
 
@@ -16,7 +16,7 @@ function pinToPinValue(en: string): number | null {
   //UI.alert("Invalid pin name");
   Logger.log("Invalid pin name: " + en);
   UI.alert("Invalid pin name: " + en);
-  return null;
+  return -1;
 }
 
 /**

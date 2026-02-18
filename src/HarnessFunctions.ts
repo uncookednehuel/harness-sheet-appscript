@@ -66,7 +66,7 @@ function promptCreateHarness() {
 
 const WIDTH = 4;
 
-function createHarness(name, id, pins, pinType) {
+function createHarness(name: string, id: string, pins: number, pinType: boolean) {
   Logger.log("Creating harness")
 
   var rows = [];
@@ -83,10 +83,11 @@ function createHarness(name, id, pins, pinType) {
     workingRow[0] = pinType ? i + 1 : ALPHABET[i];
     rows.push(workingRow);
   }
-
+  if(selected != null) { // <--- Owen retard code (dont trust)
     SHEET.getRange(selected.getRow(), selected.getColumn(), pins + 1, WIDTH).setValues(rows)
       .setBorder(true, true, true, true, false, false, null, SpreadsheetApp.BorderStyle.SOLID_THICK)
       .setBorder(null, null, null, null, true, true)
       .applyRowBanding();
     SHEET.getRange(selected.getRow(), selected.getColumn(), 1, WIDTH).setBackground('#bdbdbd');
+  }
 }

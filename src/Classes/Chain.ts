@@ -1,8 +1,8 @@
 class Chain {
-  pins: DefinedPin[];
+  pins: Array<DefinedPin>;
 
   constructor() {
-    this.pins = new Array();
+    this.pins = [];
   }
 
   /**

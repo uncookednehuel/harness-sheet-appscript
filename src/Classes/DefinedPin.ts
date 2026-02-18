@@ -18,14 +18,37 @@ class DefinedPin extends Pin {
   }
 
   // Bloody monster
-  getChain(): Chain {
-    const globalComponents = Component.getAllComponentsMap();
-    let chain = new Chain();
+  getChain(): Chain | undefined {
 
+    
+    const globalComponents = Component.getAllComponentsMap();
+    if (globalComponents.size == 0) {
+      UI.alert("No components found in sheet");
+      return undefined;
+    }
+    let chain = new Chain();
+    
     if (!this.tos.includes(".")) {
       // Traditional notation, althoguh the cells would be different anyway so I don't know how we would even handle that
       const thisTos = seperateArguments(this.tos);
-      const lastPin = globalComponents.get(thisTos.at(-1)).getDefinedPin(seperateArguments(this.toPins).at(-1));
+
+      const thisTosAtLast = thisTos.at(-1);
+      if (thisTosAtLast == undefined) {
+        UI.alert("Error: thisTosAtOne is undefined");
+        return undefined;
+      }
+
+      const thisToPinsAtLast = seperateArguments(this.toPins).at(-1);
+      if (thisToPinsAtLast == undefined) {
+        UI.alert("Error: thisToPinsAtLast is undefined");
+        return undefined;
+      }
+      
+      const lastPin = globalComponents.get(thisTosAtLast)?.getDefinedPin(thisToPinsAtLast);
+      if (lastPin == undefined) {
+        UI.alert("Error: lastPin is undefined");
+        return undefined;
+      }
       if (seperateArguments(lastPin.tos).length == thisTos.length) {
         // If they are a duple chain
         if (thisTos.length == 1) {
@@ -33,12 +56,28 @@ class DefinedPin extends Pin {
           return chain;
         }
 
-        const nextPin = globalComponents.get(thisTos.at(0)).getDefinedPin(seperateArguments(this.toPins).at(0));
+        const thisTosAtZero = thisTos.at(0);
+        if (thisTosAtZero == undefined) {
+          UI.alert("Error: thisTosAtZero is undefined");
+          return undefined;
+        }
+
+        const thisToPinsAtZero = seperateArguments(this.toPins).at(0)
+        if (thisToPinsAtZero == undefined) {
+          UI.alert("Error: thisToPinsAtZero is undefined");
+          return undefined;
+        }
+
+        const nextPin = globalComponents.get(thisTosAtZero)?.getDefinedPin(thisToPinsAtZero);
+        if (nextPin == undefined) {
+          UI.alert("Error: nextPin is undefined");
+          return undefined;
+        }
+        
         if (seperateArguments(nextPin.tos)[0] == this.componentID) {
           // then we are in the end of the chain 
         }
       }
-
     }
 
     return chain;

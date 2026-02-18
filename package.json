@@ -3,6 +3,9 @@
     "@google/clasp": "^3.2.0"
   },
   "devDependencies": {
-    "@types/google-apps-script": "^2.0.8"
+    "@eslint/js": "^10.0.1",
+    "@types/google-apps-script": "^2.0.8",
+    "eslint": "^10.0.0",
+    "typescript-eslint": "^8.56.0"
   }
 }

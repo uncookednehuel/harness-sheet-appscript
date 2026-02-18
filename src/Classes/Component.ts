@@ -3,7 +3,7 @@
  */
 class Component {
   row: number;
-  col: number
+  col: number;
   id: string;
   maxPins: number;
   /**
