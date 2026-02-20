@@ -1,4 +1,19 @@
 /**
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
  * Represents a pin entry in a component, e.g. pin value, the Tos in the chain, To Pins, Function, and so on
  */
 class DefinedPin extends Pin {
@@ -30,7 +45,7 @@ class DefinedPin extends Pin {
     
     if (!this.tos.includes(".")) {
       // Traditional notation, althoguh the cells would be different anyway so I don't know how we would even handle that
-      const thisTos = seperateArguments(this.tos);
+      const thisTos: string[] = seperateArguments(this.tos);
 
       const thisTosAtLast = thisTos.at(-1);
       if (thisTosAtLast == undefined) {
