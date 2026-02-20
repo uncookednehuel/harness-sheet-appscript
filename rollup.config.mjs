@@ -20,7 +20,7 @@ import typescript from 'rollup-plugin-typescript2';
 import { fileURLToPath } from 'url';
 
 export default {
-  input: 'src/index.ts',
+  input: 'src/Main.ts',
   output: {
     dir: 'dist',
     format: 'esm',
