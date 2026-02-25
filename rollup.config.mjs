@@ -23,7 +23,7 @@ export default {
   input: 'src/Main.ts',
   output: {
     dir: 'dist',
-    format: 'esm',
+    format: 'iife',
   },
   plugins: [
     cleanup({ comments: 'none', extensions: ['.ts'] }),

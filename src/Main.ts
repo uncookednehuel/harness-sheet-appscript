@@ -13,18 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const UI = SpreadsheetApp.getUi();
-const SHEET = SpreadsheetApp.getActiveSheet();
-const SHEET_BREADTH = 15;
-const SHEET_DEPTH = 1000;
-const FUNCTION_TEXT = "Function";
-const PIN_TEXT = "Pin";
-const ID_PREFIX = "$";
+
+import { createChain } from './CreateChain';
+import { promptCreateHarness } from './HarnessFunctions';
+import { GetConnectorList, GetPinList } from './ModifyChainFunctions';
+import { testFindIDCell, testGetChain, testSeperateArguments } from './Tests';
+import { UI } from './Constants';
 
 function onOpen() {
-  const submenu = UI.createMenu('are').addItem('gay', 'gay');
-  const importantSubmenu = UI.createMenu('You').addSubMenu(submenu);
-  UI.createMenu('Harness')
+  const ui = SpreadsheetApp.getUi();
+  const submenu = ui.createMenu('are').addItem('gay', 'gay');
+  const importantSubmenu = ui.createMenu('You').addSubMenu(submenu);
+  ui.createMenu('Harness')
     .addItem('Modify selected chain', 'openDialogue')
     .addItem('Add component starting at selected cell', 'promptCreateHarness')
     .addItem('Add chain', 'createChain')
@@ -57,3 +57,16 @@ function openDialogue() {
 // }
 
 function gay() {UI.alert("Hahahah you fell for it silly")}
+
+// Expose functions to the global scope so Apps Script can call them
+const global = this as any;
+global.onOpen = onOpen;
+global.openDialogue = openDialogue;
+global.gay = gay;
+global.createChain = createChain;
+global.promptCreateHarness = promptCreateHarness;
+global.testGetChain = testGetChain;
+global.testFindIDCell = testFindIDCell;
+global.testSeperateArguments = testSeperateArguments;
+global.GetConnectorList = GetConnectorList;
+global.GetPinList = GetPinList;

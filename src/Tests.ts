@@ -13,13 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function testFindIDCell() {
+
+import { UI } from './Constants';
+import { seperateArguments } from './Helpers';
+import { Component } from './Classes/Component';
+
+export function testFindIDCell() {
   // UI.alert("Test result: " + findIdCells(["VIT", "IMP", "PER"]).map(function(val) { return "ROW " + val.getRow() + " : COL " + val.getColumn(); }));
   // UI.alert("Test result: " + Component.fromID("PER").row);
   UI.alert("Test result: " + (Component.getAllComponentsMap()?.get("CRA")?.getDefinedPin("6")?.toString() ?? "null"));
 }
 
-function testGetChain() {
+export function testGetChain() {
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());
   UI.alert("Test result: " + (Component.fromID("PER")?.getDefinedPin("A")?.getChain()?.toString() ?? "null"));
   // const chain = new Chain();
@@ -27,6 +32,6 @@ function testGetChain() {
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());
 }
 
-function testSeperateArguments() {
+export function testSeperateArguments() {
   UI.alert("Test result: " + seperateArguments("VIT"));
 }

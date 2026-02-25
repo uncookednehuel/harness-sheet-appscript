@@ -13,10 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { SHEET, SHEET_BREADTH, SHEET_DEPTH, FUNCTION_TEXT, ID_PREFIX } from '../Constants';
+import { Pin } from './Pin';
+import { DefinedPin } from './DefinedPin';
+
 /**
  * Represents one of the "blocks" that has an ID, name, and multiple rows of pins, each with properties.
  */
-class Component {
+export class Component {
   row: number;
   col: number;
   id: string;

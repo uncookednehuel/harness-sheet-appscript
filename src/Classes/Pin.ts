@@ -13,10 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { SHEET } from '../Constants';
+import { pinToPinValue } from '../Helpers';
+import { Component } from './Component';
+import { DefinedPin } from './DefinedPin';
+
 /**
  * Represents a pin using only its componentID and the pinAlphaNum
  */
-class Pin {
+export class Pin {
   componentID: string;
   pinAlphaNum: string;
 

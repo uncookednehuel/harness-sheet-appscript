@@ -13,7 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function createChain() {
+
+import { UI, SHEET } from './Constants';
+import { suffixOfNumber, findIdCells, pinToPinValue } from './Helpers';
+
+export function createChain() {
   const C_CHAIN_HEADING = "Creating new chain...";
   var ids: string[] = [];
   var idCells: GoogleAppsScript.Spreadsheet.Range[] = [];

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class Chain {
+import { DefinedPin } from './DefinedPin';
+
+export class Chain {
   pins: Array<DefinedPin>;
 
   constructor() {

@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const ALPHABET = [
-  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A–Z
-  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))  // a–z
-];
+
+import { UI, SHEET, SHEET_BREADTH, SHEET_DEPTH, FUNCTION_TEXT, PIN_TEXT, ID_PREFIX, ALPHABET } from './Constants';
 
 /**
  * Converts a pin alphanumerical (A, B, 1, 2) to a pin value (1, 2, 3).
  */
-function pinToPinValue(en: string): number {
+export function pinToPinValue(en: string): number {
   var parsed = parseInt(en);
   if (!Number.isNaN(parsed)) { return parsed; }
 
@@ -37,7 +35,7 @@ function pinToPinValue(en: string): number {
 /**
  * Returns every other word (0-based indices 0, 2, 4, ...) from the input string.
  */
-function seperateArguments(en: string): string[] {
+export function seperateArguments(en: string): string[] {
   return en ? en.trim().split(/\s+/).filter((element, i) => { return i % 2 === 0; }) : [];
   //return en.split(" :: ");
 }
@@ -45,7 +43,7 @@ function seperateArguments(en: string): string[] {
 /**
  * Gets the suffix of a number, e.g. st for 1, nd for 2, rd for 3, th for 4 and so on. Used for UI purposes.
  */
-function suffixOfNumber(val: number): string {
+export function suffixOfNumber(val: number): string {
   var m = val % 100;
   return m == 1 ? "st " : (m == 2 ? "nd " : (m == 3 ? "rd " : "th "));
 }
@@ -55,7 +53,7 @@ function suffixOfNumber(val: number): string {
  * 
  * @deprecated Since move to classes.
  */
-function findIdCells(ids: string[]): GoogleAppsScript.Spreadsheet.Range[] {
+export function findIdCells(ids: string[]): GoogleAppsScript.Spreadsheet.Range[] {
   var cells = new Array(ids.length);
   SHEET.getRange(1, 1, 1, SHEET_BREADTH).getValues()[0].forEach(function(val, col) {
       if (val == FUNCTION_TEXT) {

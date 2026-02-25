@@ -13,10 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import { UI } from '../Constants';
+import { seperateArguments } from '../Helpers';
+import { Pin } from './Pin';
+import { Component } from './Component';
+import { Chain } from './Chain';
+
 /**
  * Represents a pin entry in a component, e.g. pin value, the Tos in the chain, To Pins, Function, and so on
  */
-class DefinedPin extends Pin {
+export class DefinedPin extends Pin {
   tos: string;
   toPins: string
   func: string;
@@ -47,13 +53,14 @@ class DefinedPin extends Pin {
       // Traditional notation, althoguh the cells would be different anyway so I don't know how we would even handle that
       const thisTos: string[] = seperateArguments(this.tos);
 
-      const thisTosAtLast = thisTos.at(-1);
+      const thisTosAtLast = thisTos[thisTos.length - 1];
       if (thisTosAtLast == undefined) {
         UI.alert("Error: thisTosAtOne is undefined");
         return undefined;
       }
 
-      const thisToPinsAtLast = seperateArguments(this.toPins).at(-1);
+      const thisToPins = seperateArguments(this.toPins);
+      const thisToPinsAtLast = thisToPins[thisToPins.length - 1];
       if (thisToPinsAtLast == undefined) {
         UI.alert("Error: thisToPinsAtLast is undefined");
         return undefined;
@@ -71,13 +78,13 @@ class DefinedPin extends Pin {
           return chain;
         }
 
-        const thisTosAtZero = thisTos.at(0);
+        const thisTosAtZero = thisTos[0];
         if (thisTosAtZero == undefined) {
           UI.alert("Error: thisTosAtZero is undefined");
           return undefined;
         }
 
-        const thisToPinsAtZero = seperateArguments(this.toPins).at(0)
+        const thisToPinsAtZero = seperateArguments(this.toPins)[0];
         if (thisToPinsAtZero == undefined) {
           UI.alert("Error: thisToPinsAtZero is undefined");
           return undefined;

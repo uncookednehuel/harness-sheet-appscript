@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-function promptCreateHarness() {
+
+import { UI, SHEET, ALPHABET, FUNCTION_TEXT, PIN_TEXT, ID_PREFIX } from './Constants';
+
+export function promptCreateHarness() {
   const C_HARNESS_HEADING = "Creating new harness";
 
   var name = UI.prompt(
@@ -81,7 +84,7 @@ function promptCreateHarness() {
 
 const WIDTH = 4;
 
-function createHarness(name: string, id: string, pins: number, pinType: boolean) {
+export function createHarness(name: string, id: string, pins: number, pinType: boolean) {
   Logger.log("Creating harness")
 
   var rows = [];
