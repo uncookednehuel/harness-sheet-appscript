@@ -17,6 +17,7 @@ import fs from 'fs';
 import path from 'path';
 
 const distDir = path.resolve('dist');
+const htmlSourceDir = path.resolve('src/HTML');
 
 const preferredOrder = [
   'Constants.js',
@@ -73,3 +74,16 @@ const contents = orderedFiles
   .join('\n\n');
 
 fs.writeFileSync(path.join(distDir, 'index.js'), `${contents}\n`, 'utf8');
+
+if (fs.existsSync(htmlSourceDir)) {
+  for (const entry of fs.readdirSync(htmlSourceDir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith('.html')) {
+      continue;
+    }
+
+    fs.copyFileSync(
+      path.join(htmlSourceDir, entry.name),
+      path.join(distDir, entry.name)
+    );
+  }
+}
