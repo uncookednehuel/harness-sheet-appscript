@@ -1,12 +1,27 @@
-export const UI = SpreadsheetApp.getUi();
-export const SHEET = SpreadsheetApp.getActiveSheet();
-export const SHEET_BREADTH = 15;
-export const SHEET_DEPTH = 1000;
-export const FUNCTION_TEXT = "Function";
-export const PIN_TEXT = "Pin";
-export const ID_PREFIX = "$";
+/**
+ * Copyright 2025 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+const UI = SpreadsheetApp.getUi();
+const SHEET = SpreadsheetApp.getActiveSheet();
+const SHEET_BREADTH = 15;
+const SHEET_DEPTH = 1000;
+const FUNCTION_TEXT = 'Function';
+const PIN_TEXT = 'Pin';
+const ID_PREFIX = '$';
 
-export const ALPHABET = [
+const ALPHABET = [
   ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A–Z
-  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))  // a–z
+  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a–z
 ];

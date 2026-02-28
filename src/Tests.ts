@@ -14,24 +14,30 @@
  * limitations under the License.
  */
 
-import { UI } from './Constants';
-import { seperateArguments } from './Helpers';
-import { Component } from './Classes/Component';
-
-export function testFindIDCell() {
+function testFindIDCell() {
   // UI.alert("Test result: " + findIdCells(["VIT", "IMP", "PER"]).map(function(val) { return "ROW " + val.getRow() + " : COL " + val.getColumn(); }));
   // UI.alert("Test result: " + Component.fromID("PER").row);
-  UI.alert("Test result: " + (Component.getAllComponentsMap()?.get("CRA")?.getDefinedPin("6")?.toString() ?? "null"));
+  UI.alert(
+    'Test result: ' +
+      (Component.getAllComponentsMap()
+        ?.get('CRA')
+        ?.getDefinedPin('6')
+        ?.toString() ?? 'null')
+  );
 }
 
-export function testGetChain() {
+function testGetChain() {
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());
-  UI.alert("Test result: " + (Component.fromID("PER")?.getDefinedPin("A")?.getChain()?.toString() ?? "null"));
+  UI.alert(
+    'Test result: ' +
+      (Component.fromID('PER')?.getDefinedPin('A')?.getChain()?.toString() ??
+        'null')
+  );
   // const chain = new Chain();
   // chain.pins = [new Pin("VIT", 2, "IMP", "4", "Crac", "nunuunununun"), new Pin("IMP", 4, "IMP", "4", "Crac", "nunuunununun")]
   // UI.alert("Test result: " + Component.fromID("VIT").getPin(2).getChain().toString());
 }
 
-export function testSeperateArguments() {
-  UI.alert("Test result: " + seperateArguments("VIT"));
+function testSeperateArguments() {
+  UI.alert('Test result: ' + seperateArguments('VIT'));
 }

@@ -13,51 +13,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { defineConfig, globalIgnores } from "eslint/config";
-import prettier from "eslint-plugin-prettier";
-import globals from "globals";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import { defineConfig, globalIgnores } from 'eslint/config';
+import globals from 'globals';
+import { createRequire } from 'node:module';
+import prettierPlugin from 'eslint-plugin-prettier';
+import prettierConfig from 'eslint-config-prettier';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
-});
+const require = createRequire(import.meta.url);
+const gtsConfig = require('gts/build/eslint.config.js');
 
-export default defineConfig([globalIgnores([
-    "template/**/*",
-    "template-ui/**/*",
-    "**/node_modules/*",
-    "build/*",
-    "**/dist/*",
-    "**/testing",
-]), {
-    extends: compat.extends("./node_modules/gts", "prettier"),
-
-    plugins: {
-        prettier,
-    },
-
+export default defineConfig([
+  globalIgnores([
+    'template/**/*',
+    'template-ui/**/*',
+    '**/node_modules/*',
+    'build/*',
+    '**/dist/*',
+    '**/testing',
+  ]),
+  ...gtsConfig,
+  {
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
-
-        ecmaVersion: "latest",
-        sourceType: "module",
-
-        parserOptions: {
-            project: "./tsconfig.json",
-        },
+      parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: process.cwd(),
+      },
     },
-
+  },
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+  {
+    plugins: {
+      prettier: prettierPlugin,
+    },
     rules: {
-        "prettier/prettier": "error",
+      'prettier/prettier': 'error',
     },
-}]);
+  },
+  prettierConfig,
+]);

@@ -13,13 +13,13 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <base target="_top" />
     <meta charset="UTF-8" />
     <style>
-      :root{
+      :root {
         --label-col-w: 90px;
         --cell-h: 22px;
         --border: #cbd5e1;
@@ -138,14 +138,16 @@ limitations under the License.
 
     <div class="footer-bar">
       <button class="btn" onclick="onRevert()">Revert</button>
-      <button class="btn btn-primary" onclick="onUpdateChain()">Update chain</button>
+      <button class="btn btn-primary" onclick="onUpdateChain()">
+        Update chain
+      </button>
     </div>
 
     <script>
       let connectorList = [];
       let pinList = [];
 
-      document.addEventListener("DOMContentLoaded", init);
+      document.addEventListener('DOMContentLoaded', init);
 
       function init() {
         readListsFromAppsScript();
@@ -180,30 +182,30 @@ limitations under the License.
 
         const displayData = {
           connector: connectors.slice(0, n),
-          pin: pins.slice(0, n)
+          pin: pins.slice(0, n),
         };
 
-        buildDisplayTable("displayTable", displayData, n);
-        buildInputTable("inputTable", displayData, n);
+        buildDisplayTable('displayTable', displayData, n);
+        buildInputTable('inputTable', displayData, n);
 
-        applySharedColumnWidths("displayTable", "inputTable");
+        applySharedColumnWidths('displayTable', 'inputTable');
       }
 
       function buildDisplayTable(id, data, n) {
         const t = document.getElementById(id);
-        t.innerHTML = "";
+        t.innerHTML = '';
 
-        ["connector", "pin"].forEach(row => {
-          const tr = document.createElement("tr");
+        ['connector', 'pin'].forEach(row => {
+          const tr = document.createElement('tr');
 
-          const th = document.createElement("th");
-          th.className = "row-label";
+          const th = document.createElement('th');
+          th.className = 'row-label';
           th.textContent = row;
           tr.appendChild(th);
 
           for (let i = 0; i < n; i++) {
-            const td = document.createElement("td");
-            td.textContent = data[row][i] ?? "";
+            const td = document.createElement('td');
+            td.textContent = data[row][i] ?? '';
             tr.appendChild(td);
           }
 
@@ -213,22 +215,22 @@ limitations under the License.
 
       function buildInputTable(id, data, n) {
         const t = document.getElementById(id);
-        t.innerHTML = "";
+        t.innerHTML = '';
 
-        ["connector", "pin"].forEach(row => {
-          const tr = document.createElement("tr");
+        ['connector', 'pin'].forEach(row => {
+          const tr = document.createElement('tr');
 
-          const th = document.createElement("th");
-          th.className = "row-label";
+          const th = document.createElement('th');
+          th.className = 'row-label';
           th.textContent = row;
           tr.appendChild(th);
 
           for (let i = 0; i < n; i++) {
-            const td = document.createElement("td");
-            const input = document.createElement("input");
-            input.className = "cell-input";
-            input.type = "text";
-            input.placeholder = data[row][i] ?? "";
+            const td = document.createElement('td');
+            const input = document.createElement('input');
+            input.className = 'cell-input';
+            input.type = 'text';
+            input.placeholder = data[row][i] ?? '';
             input.dataset.row = row;
             input.dataset.col = i;
             td.appendChild(input);
@@ -253,31 +255,33 @@ limitations under the License.
         setColgroup(input, widths);
 
         const w = Math.round(display.getBoundingClientRect().width);
-        input.style.width = w + "px";
+        input.style.width = w + 'px';
       }
 
       function setColgroup(tableEl, widths) {
-        const existing = tableEl.querySelector("colgroup");
+        const existing = tableEl.querySelector('colgroup');
         if (existing) existing.remove();
 
-        const colgroup = document.createElement("colgroup");
+        const colgroup = document.createElement('colgroup');
         widths.forEach(w => {
-          const col = document.createElement("col");
-          col.style.width = w + "px";
+          const col = document.createElement('col');
+          col.style.width = w + 'px';
           colgroup.appendChild(col);
         });
 
         tableEl.insertBefore(colgroup, tableEl.firstChild);
       }
 
-      window.addEventListener("resize", () => applySharedColumnWidths("displayTable", "inputTable"));
+      window.addEventListener('resize', () =>
+        applySharedColumnWidths('displayTable', 'inputTable')
+      );
 
       function onRevert() {
         renderTablesFromLists(connectorList, pinList);
       }
 
       function onUpdateChain() {
-        console.log("Update chain");
+        console.log('Update chain');
       }
     </script>
   </body>

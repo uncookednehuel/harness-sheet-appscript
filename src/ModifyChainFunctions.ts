@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export function GetConnectorList() {
-  return [["A", "B", "C", "D"], ["1", "2", "3", "5"]];
+function GetConnectorList() {
+  return [
+    ['A', 'B', 'C', 'D'],
+    ['1', '2', '3', '5'],
+  ];
 }
 
-export function GetPinList() {
-  return ["1", "2", "3", "5"];
+function GetPinList() {
+  return ['1', '2', '3', '5'];
 }

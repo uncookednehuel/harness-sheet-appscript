@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-import { createChain } from './CreateChain';
-import { promptCreateHarness } from './HarnessFunctions';
-import { GetConnectorList, GetPinList } from './ModifyChainFunctions';
-import { testFindIDCell, testGetChain, testSeperateArguments } from './Tests';
-import { UI } from './Constants';
-
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
   const submenu = ui.createMenu('are').addItem('gay', 'gay');
@@ -35,9 +29,9 @@ function onOpen() {
 }
 
 function openDialogue() {
-  var html = HtmlService.createHtmlOutputFromFile('ModifyChain');
+  const html = HtmlService.createHtmlOutputFromFile('ModifyChain');
   SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-      .showModalDialog(html, 'Modifying selected chain');
+    .showModalDialog(html, 'Modifying selected chain');
 }
 
 // function onEdit(e) {
@@ -56,17 +50,6 @@ function openDialogue() {
 //   }
 // }
 
-function gay() {UI.alert("Hahahah you fell for it silly")}
-
-// Expose functions to the global scope so Apps Script can call them
-const global = this as any;
-global.onOpen = onOpen;
-global.openDialogue = openDialogue;
-global.gay = gay;
-global.createChain = createChain;
-global.promptCreateHarness = promptCreateHarness;
-global.testGetChain = testGetChain;
-global.testFindIDCell = testFindIDCell;
-global.testSeperateArguments = testSeperateArguments;
-global.GetConnectorList = GetConnectorList;
-global.GetPinList = GetPinList;
+function gay() {
+  UI.alert('Hahahah you fell for it silly');
+}

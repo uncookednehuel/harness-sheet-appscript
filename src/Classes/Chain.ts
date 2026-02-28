@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { DefinedPin } from './DefinedPin';
 
-export class Chain {
+class Chain {
   pins: Array<DefinedPin>;
 
   constructor() {
@@ -32,11 +31,15 @@ export class Chain {
    * @returns {string}
    */
   toString(): string {
-    let str = "IDs: {"
-    this.pins.forEach(function(val, i, arr) { str += (val.componentID + (i == arr.length - 1 ? "" : " :: "))});
-    str += "} Pins values: {";
-    this.pins.forEach(function(val, i, arr) { str += (val.pinAlphaNum + (i == arr.length - 1 ? "" : " :: "))});
-    str += "}";
+    let str = 'IDs: {';
+    this.pins.forEach((val, i, arr) => {
+      str += val.componentID + (i == arr.length - 1 ? '' : ' :: ');
+    });
+    str += '} Pins values: {';
+    this.pins.forEach((val, i, arr) => {
+      str += val.pinAlphaNum + (i == arr.length - 1 ? '' : ' :: ');
+    });
+    str += '}';
     return str;
   }
 }
