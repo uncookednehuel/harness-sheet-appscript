@@ -23,13 +23,13 @@ function promptCreateHarness() {
     UI.ButtonSet.OK_CANCEL
   );
 
-  if (name.getSelectedButton() == UI.Button.CANCEL) {
+  if (name.getSelectedButton() === UI.Button.CANCEL) {
     return;
   }
 
   const id = UI.prompt(C_HARNESS_HEADING, 'Enter ID:', UI.ButtonSet.OK_CANCEL);
 
-  if (id.getSelectedButton() == UI.Button.CANCEL || id == null) {
+  if (id.getSelectedButton() === UI.Button.CANCEL || id === null) {
     return;
   }
 
@@ -43,7 +43,7 @@ function promptCreateHarness() {
 
     pinsVal = parseInt(pinsQ.getResponseText());
 
-    if (pinsQ.getSelectedButton() == UI.Button.CANCEL) {
+    if (pinsQ.getSelectedButton() === UI.Button.CANCEL) {
       return;
     }
 
@@ -57,7 +57,7 @@ function promptCreateHarness() {
       continue;
     }
 
-    if (pinsVal == 67) {
+    if (pinsVal === 67) {
       UI.alert('get out of here');
     }
 
@@ -70,10 +70,10 @@ function promptCreateHarness() {
     UI.ButtonSet.YES_NO_CANCEL
   );
 
-  if (pinType == UI.Button.CANCEL) {
+  if (pinType === UI.Button.CANCEL) {
     return;
   }
-  const yaNo = pinType == UI.Button.YES;
+  const yaNo = pinType === UI.Button.YES;
 
   createHarness(name.getResponseText(), id.getResponseText(), pinsVal, yaNo);
 }
@@ -102,7 +102,7 @@ function createHarness(
     workingRow[0] = pinType ? i + 1 : ALPHABET[i];
     rows.push(workingRow);
   }
-  if (selected != null) {
+  if (selected !== null) {
     // <--- Owen retard code (dont trust)
     SHEET.getRange(selected.getRow(), selected.getColumn(), pins + 1, WIDTH)
       .setValues(rows)

@@ -24,7 +24,7 @@ function pinToPinValue(en: string): number {
   }
 
   const index = ALPHABET.indexOf(en);
-  if (index != -1) {
+  if (index !== -1) {
     return index + 1;
   }
 
@@ -54,7 +54,7 @@ function seperateArguments(en: string): string[] {
  */
 function suffixOfNumber(val: number): string {
   const m = val % 100;
-  return m == 1 ? 'st ' : m == 2 ? 'nd ' : m == 3 ? 'rd ' : 'th ';
+  return m === 1 ? 'st ' : m === 2 ? 'nd ' : m === 3 ? 'rd ' : 'th ';
 }
 
 /**
@@ -67,12 +67,12 @@ function findIdCells(ids: string[]): GoogleAppsScript.Spreadsheet.Range[] {
   SHEET.getRange(1, 1, 1, SHEET_BREADTH)
     .getValues()[0]
     .forEach((val, col) => {
-      if (val == FUNCTION_TEXT) {
+      if (val === FUNCTION_TEXT) {
         SHEET.getRange(2, col + 1, SHEET_DEPTH, 1)
           .getValues()
           .forEach((val2, row) => {
             const index = ids.indexOf(ID_PREFIX + val2[0]);
-            if (index != -1) {
+            if (index !== -1) {
               cells[index] = SHEET.getRange(row + 2, col + 1, 1, 1);
             }
           });

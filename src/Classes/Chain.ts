@@ -33,11 +33,11 @@ class Chain {
   toString(): string {
     let str = 'IDs: {';
     this.pins.forEach((val, i, arr) => {
-      str += val.componentID + (i == arr.length - 1 ? '' : ' :: ');
+      str += val.componentID + (i === arr.length - 1 ? '' : ' :: ');
     });
     str += '} Pins values: {';
     this.pins.forEach((val, i, arr) => {
-      str += val.pinAlphaNum + (i == arr.length - 1 ? '' : ' :: ');
+      str += val.pinAlphaNum + (i === arr.length - 1 ? '' : ' :: ');
     });
     str += '}';
     return str;

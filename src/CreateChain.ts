@@ -36,13 +36,13 @@ function createChain() {
       UI.ButtonSet.OK_CANCEL
     );
 
-    if (idResponse.getSelectedButton() == UI.Button.CANCEL) {
+    if (idResponse.getSelectedButton() === UI.Button.CANCEL) {
       return;
     }
 
     idResponseText = idResponse.getResponseText();
     idCell = findIdCells([idResponseText]);
-    if (idResponseText == null || idCell[0] == null) {
+    if (idResponseText === null || idCell[0] === null) {
       UI.alert('Could not find ID');
       continue;
     }
@@ -54,12 +54,12 @@ function createChain() {
       UI.ButtonSet.OK_CANCEL
     );
 
-    if (pinResponse.getSelectedButton() == UI.Button.CANCEL) {
+    if (pinResponse.getSelectedButton() === UI.Button.CANCEL) {
       return;
     }
 
     pinResponseNum = pinToPinValue(pinResponse.getResponseText());
-    if (pinResponseNum == null) {
+    if (pinResponseNum === null) {
       UI.alert('Invalid pin format');
       continue;
     }
@@ -88,10 +88,10 @@ function createChain() {
       UI.ButtonSet.YES_NO_CANCEL
     );
 
-    if (another == UI.Button.NO) {
+    if (another === UI.Button.NO) {
       break;
     }
-    if (another == UI.Button.CANCEL) {
+    if (another === UI.Button.CANCEL) {
       return;
     }
     i++;
@@ -112,7 +112,7 @@ function createChain() {
   idCells.forEach((val, i, arr) => {
     let idsText;
     let pinsText;
-    if (i != arr.length - 1) {
+    if (i !== arr.length - 1) {
       idsText = ids.slice(i + 1).join(' :: ');
       pinsText = pins.slice(i + 1).join(' :: ');
     } else {

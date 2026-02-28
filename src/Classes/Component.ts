@@ -43,12 +43,12 @@ class Component {
     for (const [col, headerVal] of SHEET.getRange(1, 1, 1, SHEET_BREADTH)
       .getValues()[0]
       .entries()) {
-      if (headerVal == FUNCTION_TEXT) {
+      if (headerVal === FUNCTION_TEXT) {
         // Another for loop instead of indexOf because 2d array would make that more complicated
         for (const [row, val] of SHEET.getRange(2, col + 1, SHEET_DEPTH, 1)
           .getValues()
           .entries()) {
-          if (val[0] == ID_PREFIX + id) {
+          if (val[0] === ID_PREFIX + id) {
             return new Component(
               row + 2,
               col + 1,
@@ -72,11 +72,11 @@ class Component {
     for (const [col, headerVal] of SHEET.getRange(1, 1, 1, SHEET_BREADTH)
       .getValues()[0]
       .entries()) {
-      if (headerVal == FUNCTION_TEXT) {
+      if (headerVal === FUNCTION_TEXT) {
         for (const [row, val] of SHEET.getRange(2, col + 1, SHEET_DEPTH, 1)
           .getValues()
           .entries()) {
-          if (val[0].toString().charAt(0) == ID_PREFIX) {
+          if (val[0].toString().charAt(0) === ID_PREFIX) {
             const id = val[0].toString().substring(1);
             components.set(
               id,

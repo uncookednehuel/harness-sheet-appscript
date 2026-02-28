@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 const UI = SpreadsheetApp.getUi();
 const SHEET = SpreadsheetApp.getActiveSheet();
 const SHEET_BREADTH = 15;

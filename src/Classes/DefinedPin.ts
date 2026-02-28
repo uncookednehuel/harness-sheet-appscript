@@ -43,7 +43,7 @@ class DefinedPin extends Pin {
   // Bloody monster
   getChain(): Chain | undefined {
     const globalComponents = Component.getAllComponentsMap();
-    if (globalComponents.size == 0) {
+    if (globalComponents.size === 0) {
       UI.alert('No components found in sheet');
       return undefined;
     }
@@ -54,14 +54,14 @@ class DefinedPin extends Pin {
       const thisTos: string[] = seperateArguments(this.tos);
 
       const thisTosAtLast = thisTos[thisTos.length - 1];
-      if (thisTosAtLast == undefined) {
+      if (thisTosAtLast === undefined) {
         UI.alert('Error: thisTosAtOne is undefined');
         return undefined;
       }
 
       const thisToPins = seperateArguments(this.toPins);
       const thisToPinsAtLast = thisToPins[thisToPins.length - 1];
-      if (thisToPinsAtLast == undefined) {
+      if (thisToPinsAtLast === undefined) {
         UI.alert('Error: thisToPinsAtLast is undefined');
         return undefined;
       }
@@ -69,25 +69,25 @@ class DefinedPin extends Pin {
       const lastPin = globalComponents
         .get(thisTosAtLast)
         ?.getDefinedPin(thisToPinsAtLast);
-      if (lastPin == undefined) {
+      if (lastPin === undefined) {
         UI.alert('Error: lastPin is undefined');
         return undefined;
       }
-      if (seperateArguments(lastPin.tos).length == thisTos.length) {
+      if (seperateArguments(lastPin.tos).length === thisTos.length) {
         // If they are a duple chain
-        if (thisTos.length == 1) {
+        if (thisTos.length === 1) {
           chain.pins.push(this, lastPin);
           return chain;
         }
 
         const thisTosAtZero = thisTos[0];
-        if (thisTosAtZero == undefined) {
+        if (thisTosAtZero === undefined) {
           UI.alert('Error: thisTosAtZero is undefined');
           return undefined;
         }
 
         const thisToPinsAtZero = seperateArguments(this.toPins)[0];
-        if (thisToPinsAtZero == undefined) {
+        if (thisToPinsAtZero === undefined) {
           UI.alert('Error: thisToPinsAtZero is undefined');
           return undefined;
         }
@@ -95,12 +95,12 @@ class DefinedPin extends Pin {
         const nextPin = globalComponents
           .get(thisTosAtZero)
           ?.getDefinedPin(thisToPinsAtZero);
-        if (nextPin == undefined) {
+        if (nextPin === undefined) {
           UI.alert('Error: nextPin is undefined');
           return undefined;
         }
 
-        if (seperateArguments(nextPin.tos)[0] == this.componentID) {
+        if (seperateArguments(nextPin.tos)[0] === this.componentID) {
           // then we are in the end of the chain
         }
       }

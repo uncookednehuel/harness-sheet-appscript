@@ -38,14 +38,14 @@ function openDialogue() {
 //   // UI.alert(seperateArguments("44 :: 3 :: 6677 :: 22"));
 //   // return;
 //   // Only accept single sell edits
-//   if (e.value == null && e.oldValue == null) { return; }
+//   if (e.value === null && e.oldValue === null) { return; }
 
 //   // disabled for now because we actually don't want it to ripple descriptions
-//   if (SHEET.getRange(1, e.range.getColumn()).getValue() == FUNCTION_TEXT && false) {
+//   if (SHEET.getRange(1, e.range.getColumn()).getValue() === FUNCTION_TEXT && false) {
 //     rippleDescription(e)
 //   }
 
-//   if (SHEET.getRange(1, e.range.getColumn()).getValue() == PIN_TEXT) {
+//   if (SHEET.getRange(1, e.range.getColumn()).getValue() === PIN_TEXT) {
 //     ripplePin(e);
 //   }
 // }
