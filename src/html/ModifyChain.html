@@ -143,6 +143,8 @@ limitations under the License.
       </button>
     </div>
 
+    <div id="status" style="margin-top:8px; font-family:monospace; font-size:11px; text-align:left;"></div>
+
     <script>
       let connectorList = [];
       let pinList = [];
@@ -150,10 +152,18 @@ limitations under the License.
       document.addEventListener('DOMContentLoaded', init);
 
       function init() {
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}] 'init() called'</div>`
+        );        
         readListsFromAppsScript();
       }
 
       function readListsFromAppsScript() {
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}] 'readListsFromAppsScript() called (calls GetConnectorList)'</div>`
+        );
         google.script.run
           .withSuccessHandler(onConnectorListLoaded)
           .withFailureHandler(onLoadError)
@@ -161,7 +171,12 @@ limitations under the License.
       }
 
       function onConnectorListLoaded(list) {
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}]  'onConnectorListLoaded() called (calls GetPinList)</div>`
+        );
         connectorList = Array.isArray(list) ? list : [];
+
         google.script.run
           .withSuccessHandler(onPinListLoaded)
           .withFailureHandler(onLoadError)
@@ -169,11 +184,26 @@ limitations under the License.
       }
 
       function onPinListLoaded(list) {
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}] 'onPinListLoaded() called (rendering tables)'</div>`
+        );
         pinList = Array.isArray(list) ? list : [];
         renderTablesFromLists(connectorList, pinList);
+
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}] 'renderTablesFromLists() complete'</div>`
+        );
       }
 
       function onLoadError(err) {
+        document.getElementById('status').textContent =
+          'ERROR: ' + (err && err.message ? err.message : String(err));
+        document.getElementById('status').insertAdjacentHTML(
+          'beforeend',
+          `<div>[${new Date().toLocaleTimeString()}] 'Error :('</div>`
+        );
         console.error(err);
       }
 

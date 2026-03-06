@@ -34,7 +34,9 @@ class Chain {
     let global: Map<string, Component> = Component.getAllComponentsMap();
     
     const newChain = new Chain();
-    for (let i = 0; i < tos.length; i++) {
+    for (let i = 0; i < Math.max(tos.length, toPins.length); i++) {
+      if (!tos[i] || !toPins[i])
+        Logger.log(`There is an undefined value at index ${i}, tos[i]: ${tos[i]}, toPins[i]: ${toPins[i]}`);
       const pin: DefinedPin | undefined = global.get(tos[i])?.getDefinedPin(toPins[i]);
       if (pin) {
         newChain.pins.push(pin);

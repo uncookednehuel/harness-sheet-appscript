@@ -40,18 +40,18 @@ class DefinedPin extends Pin {
     let orderedTos: string[];
     let orderedToPins: string[];
     if (this.isTraditional()) {
-      // Traditional notation, althoguh the cells would be different anyway so I don't know how we would even handle that
+      // Traditional notation, although the cells would be different anyway so I don't know how we would even handle that
       const thisTos: string[] = seperateArguments(this.tos);
       const thisTosLast: string | undefined = thisTos[thisTos.length - 1];
       // TODO Review this undefined behaviour, why would a string be undefined?
-      if (thisTosLast === undefined) {
+      if (!thisTosLast) {
         UI.alert('Error: thisTosAtLast is undefined');
         return undefined;
       }
 
       const thisToPins: string[] = seperateArguments(this.toPins);
       const thisToPinsLast: string | undefined = thisToPins[thisToPins.length - 1];
-      if (thisToPinsLast === undefined) {
+      if (!thisToPinsLast) {
         UI.alert('Error: thisToPinsAtLast is undefined');
         return undefined;
       }
@@ -59,23 +59,28 @@ class DefinedPin extends Pin {
       const lastPin: DefinedPin | undefined = globalComponents
         .get(thisTosLast)
         ?.getDefinedPin(thisToPinsLast);
-      const lastPinTos: string[] = seperateArguments(lastPin?.tos ?? '');
-      if (lastPin === undefined) {
+      const lastPinTos: string[] = seperateArguments(lastPin?.tos ?? "");
+      if (!lastPin) {
         UI.alert('Error: lastPin is undefined');
         return undefined;
       }
 
       // Duple chain
       if (lastPinTos.length === 1 && thisTos.length === 1) {
+        Logger.log(`Duple chain of ${this.componentID}:${this.pinAlphaNum}  ${lastPin.componentID}:${lastPin.pinAlphaNum}`);
         return Chain.zipChain(
           [this.componentID, lastPin.componentID],
           [this.pinAlphaNum, lastPin.pinAlphaNum]
         );
       }
 
-      orderedTos = lastPinTos.reverse().concat(this.componentID);
-      orderedToPins = seperateArguments(lastPin.toPins).reverse().concat(this.pinAlphaNum);
+      orderedTos = lastPinTos.reverse().concat(lastPin.componentID);
+      orderedToPins = seperateArguments(lastPin.toPins).reverse().concat(lastPin.pinAlphaNum);
+
+      // Need to test other conditions, seems to work now
+
       if (lastPinTos.length === thisTos.length) {
+        Logger.log(`Lenghts are equal of lastPin: ${lastPinTos.length} and this: ${thisTos.length}`);
         const checkPin: DefinedPin | undefined = globalComponents
         .get(thisTos[0])
         ?.getDefinedPin(thisToPins[0]);
@@ -83,9 +88,10 @@ class DefinedPin extends Pin {
           UI.alert('Error: checkPin is undefined');
           return undefined;
         }
-        
+        Logger.log(`Check pin of ${checkPin.componentID}:${checkPin.pinAlphaNum}`);
         const checkPinTos: string[] = seperateArguments(checkPin?.tos ?? '');
         if (checkPinTos.length === thisTos.length - 1) {
+          Logger.log("We are at the front of chain blyaaaat")
           // We are at the front of the chain
           orderedTos = [this.componentID].concat(thisTos);
           orderedToPins = [this.pinAlphaNum].concat(thisToPins);
@@ -97,6 +103,7 @@ class DefinedPin extends Pin {
       orderedToPins = [];
     }
 
+    Logger.log(`Final before zip: Ordered Tos: ${orderedTos}, Ordered ToPins: ${orderedToPins}`);
     return Chain.zipChain(orderedTos, orderedToPins);
     // boom blyat cyka done!
   }
