@@ -7,6 +7,6 @@ const PIN_TEXT = 'Pin';
 const ID_PREFIX = '$';
 
 const ALPHABET = [
-  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A–Z
-  ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a–z
+    ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i)), // A–Z
+    ...Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)), // a–z
 ];

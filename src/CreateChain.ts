@@ -1,116 +1,118 @@
 function createChain() {
-  const C_CHAIN_HEADING = 'Creating new chain...';
-  const ids: string[] = [];
-  const idCells: GoogleAppsScript.Spreadsheet.Range[] = [];
-  const pins: string[] = [];
+    const C_CHAIN_HEADING = 'Creating new chain...';
+    const ids: string[] = [];
+    const idCells: GoogleAppsScript.Spreadsheet.Range[] = [];
+    const pins: string[] = [];
 
-  let i = 1;
-  let idResponse;
-  let idResponseText;
-  let idCell;
-  let pinResponse;
-  let pinResponseNum;
-  let pinResponseMax;
-  // Should make a list of valid IDs at the beginning and just use that instead of checking per ID entry
-  while (true) {
-    // Obtain ID
-    idResponse = UI.prompt(
-      C_CHAIN_HEADING,
-      'Enter ' + i + suffixOfNumber(i) + ' component ID',
-      UI.ButtonSet.OK_CANCEL
+    let i = 1;
+    let idResponse;
+    let idResponseText;
+    let idCell;
+    let pinResponse;
+    let pinResponseNum;
+    let pinResponseMax;
+    // Should make a list of valid IDs at the beginning and just use that instead of checking per ID entry
+    while (true) {
+        // Obtain ID
+        idResponse = UI.prompt(
+            C_CHAIN_HEADING,
+            'Enter ' + i + suffixOfNumber(i) + ' component ID',
+            UI.ButtonSet.OK_CANCEL
+        );
+
+        if (idResponse.getSelectedButton() === UI.Button.CANCEL) {
+            return;
+        }
+
+        idResponseText = idResponse.getResponseText();
+        idCell = findIdCells([idResponseText]);
+        if (idResponseText === null || idCell[0] === null) {
+            UI.alert('Could not find ID');
+            continue;
+        }
+
+        // Obtain pin
+        pinResponse = UI.prompt(
+            C_CHAIN_HEADING,
+            'Enter ' + i + suffixOfNumber(i) + ' component pin',
+            UI.ButtonSet.OK_CANCEL
+        );
+
+        if (pinResponse.getSelectedButton() === UI.Button.CANCEL) {
+            return;
+        }
+
+        pinResponseNum = pinToPinValue(pinResponse.getResponseText());
+        if (pinResponseNum === null) {
+            UI.alert('Invalid pin format');
+            continue;
+        }
+
+        // TODO this might be cooked
+        pinResponseMax = SHEET.getRange(
+            idCell[0].getRow(),
+            idCell[0].getColumn() - 1
+        ).getValue();
+        if (!(typeof pinResponseMax === 'number') || isNaN(pinResponseMax)) {
+            UI.alert('This component has an invalid pin quantity entry');
+            continue;
+        }
+        if (pinResponseNum > pinResponseMax) {
+            UI.alert(
+                'Mrk the pin you entered is out of range of this component'
+            );
+            continue;
+        }
+
+        ids.push(idResponseText);
+        idCells.push(idCell[0]);
+        pins.push(pinResponse.getResponseText());
+
+        const another = UI.alert(
+            C_CHAIN_HEADING,
+            'Do you want to add another component to this chain?',
+            UI.ButtonSet.YES_NO_CANCEL
+        );
+
+        if (another === UI.Button.NO) {
+            break;
+        }
+        if (another === UI.Button.CANCEL) {
+            return;
+        }
+        i++;
+    }
+    // Maybe a prompt at the end to ask for function description or something like that
+    UI.alert(
+        'We have created a chain of: ' +
+            idCells +
+            ' and vittu voi ' +
+            pins +
+            ' and pins numbers ' +
+            pins.map(val => {
+                return pinToPinValue(val);
+            })
     );
 
-    if (idResponse.getSelectedButton() === UI.Button.CANCEL) {
-      return;
-    }
+    // Now actually create it rollo
+    idCells.forEach((val, i, arr) => {
+        let idsText;
+        let pinsText;
+        if (i !== arr.length - 1) {
+            idsText = ids.slice(i + 1).join(' :: ');
+            pinsText = pins.slice(i + 1).join(' :: ');
+        } else {
+            const idsReversed = [...ids].reverse();
+            const pinsReversed = [...pins].reverse();
+            idsText = idsReversed.slice(1).join(' :: ');
+            pinsText = pinsReversed.slice(1).join(' :: ');
+        }
 
-    idResponseText = idResponse.getResponseText();
-    idCell = findIdCells([idResponseText]);
-    if (idResponseText === null || idCell[0] === null) {
-      UI.alert('Could not find ID');
-      continue;
-    }
-
-    // Obtain pin
-    pinResponse = UI.prompt(
-      C_CHAIN_HEADING,
-      'Enter ' + i + suffixOfNumber(i) + ' component pin',
-      UI.ButtonSet.OK_CANCEL
-    );
-
-    if (pinResponse.getSelectedButton() === UI.Button.CANCEL) {
-      return;
-    }
-
-    pinResponseNum = pinToPinValue(pinResponse.getResponseText());
-    if (pinResponseNum === null) {
-      UI.alert('Invalid pin format');
-      continue;
-    }
-
-    // TODO this might be cooked
-    pinResponseMax = SHEET.getRange(
-      idCell[0].getRow(),
-      idCell[0].getColumn() - 1
-    ).getValue();
-    if (!(typeof pinResponseMax === 'number') || isNaN(pinResponseMax)) {
-      UI.alert('This component has an invalid pin quantity entry');
-      continue;
-    }
-    if (pinResponseNum > pinResponseMax) {
-      UI.alert('Mrk the pin you entered is out of range of this component');
-      continue;
-    }
-
-    ids.push(idResponseText);
-    idCells.push(idCell[0]);
-    pins.push(pinResponse.getResponseText());
-
-    const another = UI.alert(
-      C_CHAIN_HEADING,
-      'Do you want to add another component to this chain?',
-      UI.ButtonSet.YES_NO_CANCEL
-    );
-
-    if (another === UI.Button.NO) {
-      break;
-    }
-    if (another === UI.Button.CANCEL) {
-      return;
-    }
-    i++;
-  }
-  // Maybe a prompt at the end to ask for function description or something like that
-  UI.alert(
-    'We have created a chain of: ' +
-      idCells +
-      ' and vittu voi ' +
-      pins +
-      ' and pins numbers ' +
-      pins.map(val => {
-        return pinToPinValue(val);
-      })
-  );
-
-  // Now actually create it rollo
-  idCells.forEach((val, i, arr) => {
-    let idsText;
-    let pinsText;
-    if (i !== arr.length - 1) {
-      idsText = ids.slice(i + 1).join(' :: ');
-      pinsText = pins.slice(i + 1).join(' :: ');
-    } else {
-      const idsReversed = [...ids].reverse();
-      const pinsReversed = [...pins].reverse();
-      idsText = idsReversed.slice(1).join(' :: ');
-      pinsText = pinsReversed.slice(1).join(' :: ');
-    }
-
-    SHEET.getRange(
-      val.getRow() + pinToPinValue(pins[i]),
-      val.getColumn() - 2,
-      1,
-      2
-    ).setValues([[idsText, pinsText]]);
-  });
+        SHEET.getRange(
+            val.getRow() + pinToPinValue(pins[i]),
+            val.getColumn() - 2,
+            1,
+            2
+        ).setValues([[idsText, pinsText]]);
+    });
 }

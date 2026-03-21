@@ -1,62 +1,56 @@
 class Chain {
-  pins: Array<DefinedPin>;
+    pins: Pin[];
 
-  constructor() {
-    this.pins = [];
-  }
-
-  /**
-   * Zips a chain together given an array of component IDs and an array of pin alphanumericals
-   * @param tos 
-   * @param toPins 
-   * @returns 
-   */
-  static zipChain(tos: string[], toPins: string[]): Chain | undefined {
-    if (tos.length !== toPins.length) {
-      return undefined;
+    constructor(...pins: Pin[]) {
+        this.pins = pins;
     }
 
-    let global: Map<string, Component> = Component.getAllComponentsMap();
-    
-    const newChain = new Chain();
-    for (let i = 0; i < Math.max(tos.length, toPins.length); i++) {
-      if (!tos[i] || !toPins[i])
-        Logger.log(`There is an undefined value at index ${i}, tos[i]: ${tos[i]}, toPins[i]: ${toPins[i]}`);
-      const pin: DefinedPin | undefined = global.get(tos[i])?.getDefinedPin(toPins[i]);
-      if (pin) {
-        newChain.pins.push(pin);
-      } else {
-        Logger.log('Could not find pin ' + toPins[i] + ' on component ' + tos[i]);
-        return undefined;
-      }
+    /**
+     * Creates a Chain object with pins created from two arrays of equal length
+     * @param tos array of tos
+     * @param toPins array of alphanumerical pin values
+     * @returns a Chain object with the pins created from the two arrays, or undefined if the arrays are of different lengths
+     */
+    static fromZip(tos: string[], toPins: string[]): Chain | undefined {
+        if (tos.length !== toPins.length) {
+            return undefined;
+        }
+
+        const newPins: Pin[] = [];
+        for (let i = 0; i < tos.length; i++) {
+            newPins.push(new Pin(tos[i], toPins[i]));
+        }
+        return new Chain(...newPins);
     }
-    return newChain;
-  }
 
-  /**
-   * Burns the chain to the speadsheet
-   */
-  burnChain(): void {
-    this.pins.forEach((pin) => {
-      pin.tos = this.pins.map((p) => p.componentID).join(', ');
-      pin.toPins = this.pins.map((p) => p.pinAlphaNum).join(', ');
-    });
-  }
+    /**
+     * Defines the chain by creating a DefinedChain object with each bin being defined.
+     * The idea behind "defined" pins/chains is that they are grounded in the actual sheet with ranges
+     * and values that would populate the cells, while the non-defined versions are for easier creation and manipulation
+     * @returns A defined chain
+     */
+    define(): DefinedChain | undefined {
+        const global: Map<string, Component> = Component.getAllComponentsMap();
 
-  /**
-   * Returns string representation of the chain
-   * @returns {string}
-   */
-  toString(): string {
-    let str = 'IDs: {';
-    this.pins.forEach((val, i, arr) => {
-      str += val.componentID + (i === arr.length - 1 ? '' : ' :: ');
-    });
-    str += '} Pins values: {';
-    this.pins.forEach((val, i, arr) => {
-      str += val.pinAlphaNum + (i === arr.length - 1 ? '' : ' :: ');
-    });
-    str += '}';
-    return str;
-  }
+        const newChain = new DefinedChain();
+        for (let i = 0; i < this.pins.length; i++) {
+            const { componentID, pinAlphaNum } = this.pins[i];
+            if (!componentID || !pinAlphaNum)
+                Logger.log(
+                    `There is an undefined value at index ${i}, componentID: ${componentID}, pinAlphaNum: ${pinAlphaNum}`
+                );
+            const pin: DefinedPin | undefined = global
+                .get(componentID)
+                ?.getDefinedPin(pinAlphaNum);
+            if (pin) {
+                newChain.pins.push(pin);
+            } else {
+                Logger.log(
+                    `Pin with componentID ${componentID} and pinAlphaNum ${pinAlphaNum} is was not found in global components map`
+                );
+                return undefined;
+            }
+        }
+        return newChain;
+    }
 }
