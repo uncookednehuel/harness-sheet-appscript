@@ -8,7 +8,7 @@ class DefinedChain {
     /**
      * Burns the chain to the speadsheet
      */
-    burnChain(): void {
+    burn(): void {
         Sheets?.Spreadsheets.Values.batchUpdate(
             {
                 valueInputOption: 'USER_ENTERED',
@@ -28,15 +28,6 @@ class DefinedChain {
      * @returns {string}
      */
     toString(): string {
-        let str = 'IDs: {';
-        this.pins.forEach((val, i, arr) => {
-            str += val.componentID + (i === arr.length - 1 ? '' : ' :: ');
-        });
-        str += '} Pins values: {';
-        this.pins.forEach((val, i, arr) => {
-            str += val.pinAlphaNum + (i === arr.length - 1 ? '' : ' :: ');
-        });
-        str += '}';
-        return str;
+        return `DefinedChain pins: {${this.pins.map(pin => `(${pin.componentID}, ${pin.pinAlphaNum})`).join(', ')}}`;
     }
 }

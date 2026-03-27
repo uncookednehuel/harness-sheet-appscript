@@ -15,14 +15,21 @@ class DefinedPin extends Pin {
         pinAlphaNum: string,
         tos: string,
         toPins: string,
-        func: string,
-        wireColour: string,
+        func: string | null = null,
+        wireColour: string | null = null,
         range: Range
     ) {
         super(componentID, pinAlphaNum, func, wireColour);
         this.tos = tos;
         this.toPins = toPins;
         this.range = range;
+    }
+
+    /**
+     * I don't know what to do with these classes. Easiest I can think of is this for now.
+     */
+    defineByRead(): never {
+        throw new Error('DefinedPin cannot be defined again');
     }
 
     //* TODO must replace this when modifying class to proper
@@ -75,7 +82,7 @@ class DefinedPin extends Pin {
                 return Chain.fromZip(
                     [this.componentID, lastPin.componentID],
                     [this.pinAlphaNum, lastPin.pinAlphaNum]
-                )?.define();
+                )?.defineByRead();
             }
 
             orderedTos = lastPinTos.reverse().concat(lastPin.componentID);
@@ -119,7 +126,7 @@ class DefinedPin extends Pin {
         Logger.log(
             `Final before zip: Ordered Tos: ${orderedTos}, Ordered ToPins: ${orderedToPins}`
         );
-        return Chain.fromZip(orderedTos, orderedToPins)?.define();
+        return Chain.fromZip(orderedTos, orderedToPins)?.defineByRead();
     }
 
     /**

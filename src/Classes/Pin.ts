@@ -23,7 +23,11 @@ class Pin {
      * Defines the pin by getting the rest of the info from the spreadsheet and returning a DefinedPin object
      * @return {DefinedPin}
      */
-    define(component: Component): DefinedPin | undefined {
+    defineByRead(component: Component | null = Component.fromID(this.componentID)): DefinedPin | undefined {
+        if (!component) {
+            Logger.log(`Component with ID ${this.componentID} not found in sheet`);
+            return undefined;
+        }
         const range = SHEET.getRange(
             component.row + pinToPinValue(this.pinAlphaNum),
             component.col - 3,

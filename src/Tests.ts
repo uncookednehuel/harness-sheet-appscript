@@ -25,23 +25,12 @@ function testGetChain() {
 }
 
 function testChain() {
-    const pin1 = new DefinedPin(
-        'VIT',
-        '2',
-        'IMP',
-        '4',
-        'Crac',
-        'nunuunununun',
-        SHEET.getRange(1, 1)
-    );
-    const chain = new DefinedChain();
-    UI.alert(
-        'Test result: ' +
-            Component.fromID('PER')
-                ?.getDefinedPin('A')
-                ?.getChain()
-                ?.toString() ?? 'returned null'
-    );
+    const pin1 = new Pin('VIT', '2');
+    const pin2 = new Pin('IMP', '4');
+    const chain = new Chain(pin1, pin2);
+    const def = chain.defineByRead();
+    def?.burn();
+    UI.alert('Ran bloody test, bloddy definedchain: ' + def?.toString());
 }
 
 function testSeperateArguments() {

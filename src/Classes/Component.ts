@@ -103,6 +103,6 @@ class Component {
      * @return {DefinedPin} A defined pin object
      */
     getDefinedPin(pin: string): DefinedPin | undefined {
-        return this.getPin(pin).define(this);
+        return this.getPin(pin).defineByRead(this);
     }
 }

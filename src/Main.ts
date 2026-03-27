@@ -9,16 +9,26 @@ function onOpen() {
             'promptCreateHarness'
         )
         .addItem('Add chain', 'createChain')
-        .addItem('Test', 'testGetChain')
+        .addItem('Test', 'testChain')
         // .addItem('Test', 'testSeperateArguments')
         .addSubMenu(importantSubmenu)
         .addToUi();
 }
 
 function openDialogue() {
-    const html = HtmlService.createHtmlOutputFromFile('ModifyChain');
-    SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
-        .showModalDialog(html, 'Modifying selected chain');
+  const template = HtmlService.createTemplateFromFile('ModifyChain');
+
+  template.initialData = {
+    connectorList: GetConnectorList(),
+    pinList: GetPinList(),
+  };
+
+  const html = template
+    .evaluate()
+    .setWidth(700)
+    .setHeight(500);
+
+  SpreadsheetApp.getUi().showModalDialog(html, 'Modifying selected chain');
 }
 
 // function onEdit(e) {

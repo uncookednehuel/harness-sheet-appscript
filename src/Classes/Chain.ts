@@ -29,24 +29,34 @@ class Chain {
      * and values that would populate the cells, while the non-defined versions are for easier creation and manipulation
      * @returns A defined chain
      */
-    define(): DefinedChain | undefined {
-        const global: Map<string, Component> = Component.getAllComponentsMap();
-
+    defineByRead(compMap: Map<string, Component> = Component.getAllComponentsMap()): DefinedChain | undefined {
         const newChain = new DefinedChain();
         for (let i = 0; i < this.pins.length; i++) {
-            const { componentID, pinAlphaNum } = this.pins[i];
-            if (!componentID || !pinAlphaNum)
-                Logger.log(
-                    `There is an undefined value at index ${i}, componentID: ${componentID}, pinAlphaNum: ${pinAlphaNum}`
-                );
-            const pin: DefinedPin | undefined = global
-                .get(componentID)
-                ?.getDefinedPin(pinAlphaNum);
+            const ipin = this.pins[i];
+            const pin: DefinedPin | undefined = ipin.defineByRead(compMap.get(ipin.componentID));
             if (pin) {
                 newChain.pins.push(pin);
             } else {
                 Logger.log(
-                    `Pin with componentID ${componentID} and pinAlphaNum ${pinAlphaNum} is was not found in global components map`
+                    `Pin with componentID ${ipin.componentID} and pinAlphaNum ${ipin.pinAlphaNum} returned undefined`
+                );
+                return undefined;
+            }
+        }
+        return newChain;
+    }
+
+    generateDefinedChain(compMap: Map<string, Component> = Component.getAllComponentsMap()): DefinedChain | undefined {
+        const newChain = new DefinedChain();
+        for (let i = 0; i < this.pins.length; i++) {
+            const ipin = this.pins[i];
+            const range
+            const pin: DefinedPin | undefined = DefinedPin(ipin.componentID, ipin.pinAlphaNum, ipin.func, ipin.wireColour, range);
+            if (pin) {
+                newChain.pins.push(pin);
+            } else {
+                Logger.log(
+                    `Pin with componentID ${ipin.componentID} and pinAlphaNum ${ipin.pinAlphaNum} returned undefined`
                 );
                 return undefined;
             }
