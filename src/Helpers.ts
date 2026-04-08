@@ -1,21 +1,25 @@
+interface String {
+    pinValue(): number | undefined;
+}
+
 /**
  * Converts a pin alphanumerical (A, B, 1, 2) to a pin value (1, 2, 3).
  */
-function pinToPinValue(en: string): number {
-    const parsed = parseInt(en);
+String.prototype.pinValue = function(): number | undefined{
+    const str = this.toString().trim();
+    const parsed = parseInt(str);
     if (!Number.isNaN(parsed)) {
         return parsed;
     }
 
-    const index = ALPHABET.indexOf(en);
+    const index = ALPHABET.indexOf(str);
     if (index !== -1) {
         return index + 1;
     }
 
-    //UI.alert("Invalid pin name");
-    Logger.log('Invalid pin name: ' + en);
-    UI.alert('Invalid pin name: ' + en);
-    return -1;
+    Logger.log('Invalid pin name: ' + str);
+    UI.alert('Invalid pin name: ' + str);
+    return undefined;
 }
 
 /**
