@@ -103,10 +103,10 @@ class Component {
      * @returns Range object
      */
     getPinRange(pin: string): Range | undefined {
-        const pinValue = pinToPinValue(pin);
-        if (pinValue > this.maxPins || pinValue <= 0) return undefined;
+        const pinValue = pin.pinValue();
+        if (!pinValue || pinValue > this.maxPins || pinValue <= 0) return undefined;
         return SHEET.getRange(
-            this.row + pinToPinValue(pin),
+            this.row + pinValue,
             this.col - 3,
             1,
             5

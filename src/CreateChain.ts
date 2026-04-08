@@ -42,7 +42,7 @@ function createChain() {
             return;
         }
 
-        pinResponseNum = pinToPinValue(pinResponse.getResponseText());
+        pinResponseNum = pinResponse.getResponseText().toPinValue();
         if (pinResponseNum === null) {
             UI.alert('Invalid pin format');
             continue;
@@ -90,7 +90,7 @@ function createChain() {
             pins +
             ' and pins numbers ' +
             pins.map(val => {
-                return pinToPinValue(val);
+                return val.pinValue();
             })
     );
 
@@ -109,7 +109,7 @@ function createChain() {
         }
 
         SHEET.getRange(
-            val.getRow() + pinToPinValue(pins[i]),
+            val.getRow() + pins[i].pinValue(),
             val.getColumn() - 2,
             1,
             2
