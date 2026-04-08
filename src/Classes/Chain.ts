@@ -50,7 +50,7 @@ class Chain {
         const newChain = new DefinedChain();
         for (let i = 0; i < this.pins.length; i++) {
             const ipin = this.pins[i];
-            const range
+            const range 
             const pin: DefinedPin | undefined = DefinedPin(ipin.componentID, ipin.pinAlphaNum, ipin.func, ipin.wireColour, range);
             if (pin) {
                 newChain.pins.push(pin);

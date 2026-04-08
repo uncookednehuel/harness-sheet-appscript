@@ -9,7 +9,8 @@ function onOpen() {
             'promptCreateHarness'
         )
         .addItem('Add chain', 'createChain')
-        .addItem('Test', 'testChain')
+        .addItem('TestChain', 'testChain')
+        .addItem('TestGetChain', 'testGetChain')
         // .addItem('Test', 'testSeperateArguments')
         .addSubMenu(importantSubmenu)
         .addToUi();
@@ -30,6 +31,7 @@ function openDialogue() {
 
   SpreadsheetApp.getUi().showModalDialog(html, 'Modifying selected chain');
 }
+
 
 // function onEdit(e) {
 //   // UI.alert(seperateArguments("44 :: 3 :: 6677 :: 22"));
