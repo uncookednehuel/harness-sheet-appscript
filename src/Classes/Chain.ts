@@ -58,7 +58,7 @@ class Chain {
             const ipin = this.pins[i];
             const range = compMap.get(ipin.componentID)?.getPinRange(ipin.pinAlphaNum);
             if (!range) {
-                Logger.log("Couldn't find range for pin with componentID " + ipin.componentID + " and pinAlphaNum " + ipin.pinAlphaNum);
+                Logger.log("Couldn't  range for pin with componentID " + ipin.componentID + " and pinAlphaNum " + ipin.pinAlphaNum);
                 return undefined;
             }
             const pin: DefinedPin = new DefinedPin(
