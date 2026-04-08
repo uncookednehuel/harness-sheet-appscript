@@ -56,13 +56,19 @@ class Chain {
         const newChain = new DefinedChain();
         for (let i = 0; i < this.pins.length; i++) {
             const ipin = this.pins[i];
-            const range;
-            const pin: DefinedPin | undefined = DefinedPin(
+            const range = compMap.get(ipin.componentID)?.getPinRange(ipin.pinAlphaNum);
+            if (!range) {
+                Logger.log("Couldn't find range for pin with componentID " + ipin.componentID + " and pinAlphaNum " + ipin.pinAlphaNum);
+                return undefined;
+            }
+            const pin: DefinedPin = new DefinedPin(
                 ipin.componentID,
                 ipin.pinAlphaNum,
-                ipin.func,
-                ipin.wireColour,
-                range
+                '',
+                '',
+                null,
+                null,
+                compMap.get(ipin.componentID)?.getPinRange(ipin.pinAlphaNum)
             );
             if (pin) {
                 newChain.pins.push(pin);

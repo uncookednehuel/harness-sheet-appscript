@@ -90,11 +90,27 @@ class Component {
 
     /**
      * Gets a pin object instance of a certain pin in the component
-     * @param {string} The pin alphanumerical
+     * @param {string} pin The pin alphanumerical
      * @return {Pin} A pin object
      */
     getPin(pin: string): Pin {
         return new Pin(this.id, pin);
+    }
+
+    /**
+     * Gets a pin's range
+     * @param pin The pin alphanumerical
+     * @returns Range object
+     */
+    getPinRange(pin: string): Range | undefined {
+        const pinValue = pinToPinValue(pin);
+        if (pinValue > this.maxPins || pinValue <= 0) return undefined;
+        return SHEET.getRange(
+            this.row + pinToPinValue(pin),
+            this.col - 3,
+            1,
+            5
+        );
     }
 
     /**
