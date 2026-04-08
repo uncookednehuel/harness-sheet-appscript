@@ -29,11 +29,15 @@ class Chain {
      * and values that would populate the cells, while the non-defined versions are for easier creation and manipulation
      * @returns A defined chain
      */
-    defineByRead(compMap: Map<string, Component> = Component.getAllComponentsMap()): DefinedChain | undefined {
+    defineByRead(
+        compMap: Map<string, Component> = Component.getAllComponentsMap()
+    ): DefinedChain | undefined {
         const newChain = new DefinedChain();
         for (let i = 0; i < this.pins.length; i++) {
             const ipin = this.pins[i];
-            const pin: DefinedPin | undefined = ipin.defineByRead(compMap.get(ipin.componentID));
+            const pin: DefinedPin | undefined = ipin.defineByRead(
+                compMap.get(ipin.componentID)
+            );
             if (pin) {
                 newChain.pins.push(pin);
             } else {
@@ -46,12 +50,20 @@ class Chain {
         return newChain;
     }
 
-    generateDefinedChain(compMap: Map<string, Component> = Component.getAllComponentsMap()): DefinedChain | undefined {
+    generateDefinedChain(
+        compMap: Map<string, Component> = Component.getAllComponentsMap()
+    ): DefinedChain | undefined {
         const newChain = new DefinedChain();
         for (let i = 0; i < this.pins.length; i++) {
             const ipin = this.pins[i];
-            const range 
-            const pin: DefinedPin | undefined = DefinedPin(ipin.componentID, ipin.pinAlphaNum, ipin.func, ipin.wireColour, range);
+            const range;
+            const pin: DefinedPin | undefined = DefinedPin(
+                ipin.componentID,
+                ipin.pinAlphaNum,
+                ipin.func,
+                ipin.wireColour,
+                range
+            );
             if (pin) {
                 newChain.pins.push(pin);
             } else {

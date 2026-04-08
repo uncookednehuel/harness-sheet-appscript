@@ -17,21 +17,17 @@ function onOpen() {
 }
 
 function openDialogue() {
-  const template = HtmlService.createTemplateFromFile('ModifyChain');
+    const template = HtmlService.createTemplateFromFile('ModifyChain');
 
-  template.initialData = {
-    connectorList: GetConnectorList(),
-    pinList: GetPinList(),
-  };
+    template.initialData = {
+        connectorList: GetConnectorList(),
+        pinList: GetPinList(),
+    };
 
-  const html = template
-    .evaluate()
-    .setWidth(700)
-    .setHeight(500);
+    const html = template.evaluate().setWidth(700).setHeight(500);
 
-  SpreadsheetApp.getUi().showModalDialog(html, 'Modifying selected chain');
+    SpreadsheetApp.getUi().showModalDialog(html, 'Modifying selected chain');
 }
-
 
 // function onEdit(e) {
 //   // UI.alert(seperateArguments("44 :: 3 :: 6677 :: 22"));
